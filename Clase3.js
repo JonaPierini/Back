@@ -24,7 +24,7 @@ class ProductManager {
 
   getProductById(id) {
     if (this.products.find((prod) => prod.id === id)) {
-      console.log("Producto Encontrado");
+      return this.products
     } else {
       console.log("Not Found");
     }
@@ -34,5 +34,6 @@ class ProductManager {
 let nuevo1 = new ProductManager();
 nuevo1.addProduct("producto1", "rico", 100.5, 100, 100, 100);
 nuevo1.getProducts()
+nuevo1.getProductById(1)
 
 
