@@ -1,5 +1,4 @@
 const fs = require("fs");
-const { join } = require("path");
 
 class ProductManager {
   constructor() {
@@ -19,7 +18,7 @@ class ProductManager {
       id: this.products.length + 1,
     };
 
-    await fs.writeFile("data.txt", JSON.stringify(newProduct), (error) => {
+     fs.writeFile("data.txt", JSON.stringify(newProduct), (error) => {
       if (error) {
         console.log(error);
       } else {
@@ -28,21 +27,19 @@ class ProductManager {
     });
   }
 
-  async getProducts () {
-    await fs.readFile("data.txt", 'utf-8', (err, data) => {
-        if(err) {
-            console.log(err)
-        }
-        else{
-            console.log(JSON.parse(data))
-            return JSON.parse(data)
-        }
-    })
+  getProducts (limit) {
+    let productos = fs.readFileSync("data.json", 'utf-8')
+    JSON.parse(productos)
+    if(limit) {
+      return JSON.parse(productos).slice(0,Number(limit))
+    } else{
+      return productos
+    }
+    
   }
 }
 
 
-const prueba = new ProductManager();
-prueba.addProduct("producto1", "rico", 4, "3", 300, 2);
-prueba.getProducts()
 
+
+module.exports = ProductManager

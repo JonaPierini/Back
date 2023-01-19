@@ -4,7 +4,7 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 
-const PORT = "8080";
+const PORT = "8000";
 
 const usuarios = [
   { id: 1, nombre: "Producto 1", genero: "M" },
@@ -13,9 +13,10 @@ const usuarios = [
   { id: 4, nombre: "Producto 4", genero: "M" },
 ];
 
-// query ==> genero=F
+//localhost:8000/?genero=F
 app.get("/", (req, res) => {
   let filter = req.query.genero;
+  console.log(filter)
   let respuesta;
   if (filter) {
     respuesta = filter;
