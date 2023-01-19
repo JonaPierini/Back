@@ -18,7 +18,7 @@ class ProductManager {
       stock,
       id: this.products.length + 1,
     };
-    await fs.writeFile(this.path, newProduct, (err) => {
+    await fs.writeFile(this.path, JSON.stringify(newProduct), (err) => {
       if(err) {
         console.log(err)
       } else{
@@ -32,7 +32,7 @@ class ProductManager {
       if(err) {
         console.log(err)
       } else {
-        return data
+        return JSON.parse(data)
       }
      })
   }
@@ -43,13 +43,14 @@ class ProductManager {
         console.log(err);
       }
       else{
-         return this.products.find((prod)=> prod.id === id)  
+         let productId = this.products.find((prod)=> prod.id === id) 
+         return JSON.parse(productId) 
       }
     });
   }
 
   async updateProduct(id) {
-      if(this.products.find((prod)=> prod.id === id)) {
+      if(this.products.find((prod)=> prod.id !== id)) {
         return this.products
       }
   }
