@@ -23,7 +23,7 @@ app.get('/products', (req, res)=>  {
 app.get('/products/:id', (req, res)=> {
      const prueba = new ProductManager();
      let id = req.params.id;
-     let prodFind = prueba.getProducts().find((elem)=> elem.id === Number(id))
+     let prodFind = JSON.parse(prueba.getProducts()).find((elem)=> elem.id === Number(id))
      if(prodFind) {
         res.send(prodFind)
      } else{
