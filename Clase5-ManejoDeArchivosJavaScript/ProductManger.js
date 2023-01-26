@@ -18,51 +18,52 @@ class ProductManager {
       stock,
       id: this.products.length + 1,
     };
+    //se agregan los productos en el array
+    this.products.push(newProduct)
+
+    //se escribe el json con los datos del array
     await fs.writeFile(this.path, JSON.stringify(newProduct), (err) => {
       if(err) {
         console.log(err)
       } else{
-        this.products.push(newProduct)
+        console.log('Producto cargado')
       }
     })
   }
 
   async getProducts() {
-     await fs.readFile(this.path, 'utf-8', newProduct, (err, data) =>{
-      if(err) {
-        console.log(err)
-      } else {
-        return JSON.parse(data)
+      try {
+        const file = await fs.promises.readFile(this.path, 'utf-8')
+        return JSON.parse(file)
+      } catch (error) {
+        console.log(error)
       }
-     })
   }
 
   async getProductById(id) {
-    await fs.readFile(this.path, 'utf8', (err) => {
-      if (err) {
-        console.log(err);
-      }
-      else{
-         let productId = this.products.find((prod)=> prod.id === id) 
-         return JSON.parse(productId) 
-      }
-    });
+    try {
+      const file = await fs.promises.readFile(this.path, 'utf-8')
+      const productsId = JSON.parse(file).find((prod) => prod.id == id)
+      return productsId
+    } catch (error) {
+        console.log(error)
+    }
   }
 
-  async updateProduct(id) {
-      if(this.products.find((prod)=> prod.id !== id)) {
-        return this.products
-      }
+  async updateProduct(id){
+    try {
+      const file = await fs.promises.readFile(this.path, 'utf-8')
+      const updateId = JSON.parse(file).find((prod) => prod.id != id)
+      return updateId
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   async deleteProduct (id) {
-     await fs.readFile(this.path, 'utf-8', (err) => {
-      if(err){
-        console.log(err)
-      } else{
-        return this.products.find((prod => prod.id !== id))
-      }
-     })
+    const file = await fs.promises.readFile(this.path, 'utf-8')
+    const delet = JSON.parse(file).filter((prod) => prod.id != id)
+    return delet
   }
 }
 

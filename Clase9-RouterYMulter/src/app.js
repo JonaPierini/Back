@@ -17,7 +17,7 @@ app.use("/api/user", userRouter);
 // => http://localhost:8080/api/user/info
 // => http://localhost:8080/api/user/agregar - POST
 
-const server = app.listen(8080, () =>
-  console.log("Server running on port 8080")
+const server = app.listen(8000, () =>
+  console.log("Server running on port 8000")
 );
 server.on("error", (error) => console.log(error));

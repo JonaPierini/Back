@@ -14,6 +14,7 @@ userRouter.get("/info", (req, res) => {
 
 userRouter.post("/agregar", uploads.single('archivo'), (req, res) => {
   const file = req.file
+  console.log(file)
   if(!file){
     res.send('Error')
   }
