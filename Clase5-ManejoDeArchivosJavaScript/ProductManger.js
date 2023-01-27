@@ -53,8 +53,10 @@ class ProductManager {
   async updateProduct(id){
     try {
       const file = await fs.promises.readFile(this.path, 'utf-8')
-      const updateId = JSON.parse(file).find((prod) => prod.id != id)
-      return updateId
+      let jsonParse = JSON.parse(file)
+      let newProd = ''
+      jsonParse.find((elem) => elem.id == id).title = newProd,
+      await fs.promises.writeFile(file, JSON.stringify(jsonParse))
     } catch (error) {
       console.log(error)
     }
@@ -63,7 +65,7 @@ class ProductManager {
   async deleteProduct (id) {
     const file = await fs.promises.readFile(this.path, 'utf-8')
     const delet = JSON.parse(file).filter((prod) => prod.id != id)
-    return delet
+    await fs.promises.writeFile(file, JSON.stringify(delet))
   }
 }
 
