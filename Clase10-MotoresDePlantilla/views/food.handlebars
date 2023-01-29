@@ -1,0 +1,11 @@
+<h1>Datos Food {{testUser.name}}</h1>
+
+{{#if admin}}
+    {{#each food}}
+        
+            <p>{{name}} - {{price}}</p>
+        
+    {{/each}}
+    {{else}}
+         <h3>No podes ver la lista de alimentos</h3>
+{{/if}}
