@@ -27,12 +27,12 @@ app.use("/api/products/put/", productsRouter)
 
 //use ruta Carrito
 // => http://localhost:8080/api/carts - POST
-app.use("/api/carts", cartsRouter)
+app.use("/api/carts/", cartsRouter)
 // => http://localhost:8080/api/carts/:id - GET
 // => http://localhost:8080/api/carts/:id/products/:id - POST
+// http://localhost:8080/api/carts/6/products/8
 
 //Server
-app.use('/api/carts', cartsRouter)
 const server = app.listen(PORT, () =>
   console.log(`Server running on port ${PORT}`)
 );
