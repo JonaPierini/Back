@@ -5,23 +5,15 @@ const cartsRouter = Router();
 cartsRouter.post('/:cid/products/:pid', async (req, res)=> {
   let cid = req.params.cid;
   let pid = req.params.pid;
-  
   let allProducts = await fs.promises.readFile("productos.json", "utf-8");
-  console.log('Todos los productos ' + allProducts)
-
   let findProduct = JSON.parse(allProducts).find((producto) => producto.id == pid);
-  console.log('Producto en particular por parametro ' + JSON.stringify(findProduct))
-
   let allCarts = await fs.promises.readFile("carrito.json", "utf-8");
-  
   allCarts = JSON.parse(allCarts)
-
   let findIndexCart = allCarts.findIndex((elem) => elem.id == cid)
   if(findIndexCart === -1){
     res.send([])
   }
   let findIndex = allCarts[findIndexCart].product.findIndex((elem) => elem.id == pid)
-  
   if(findIndex == -1){
     allCarts[findIndexCart].product.push(findProduct)
   } else{
