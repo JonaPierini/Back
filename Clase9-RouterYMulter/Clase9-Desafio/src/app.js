@@ -16,8 +16,8 @@ app.get("/", (req, res) => {
 // => http://localhost:8080/api/products - GET ALL
 app.use("/api/products", productsRouter);
 // => http://localhost:8080/api/products - POST
-app.use("/api/agregar", productsRouter);
-// => http://localhost:8080/api/products/id/:id - GET X ID
+app.use("/api/products/", productsRouter);
+// => http://localhost:8080/api/products/:id - GET X ID
 app.use("/api/products/", productsRouter);
 // => http://localhost:8080/api/products/delete/:id - DELETE
 app.use("/api/products/delete/", productsRouter)
@@ -29,9 +29,10 @@ app.use("/api/products/put/", productsRouter)
 // => http://localhost:8080/api/carts - POST
 app.use("/api/carts", cartsRouter)
 // => http://localhost:8080/api/carts/:id - GET
-app.use("/api/carts", cartsRouter)
-// => http://localhost:8080/api/product/:id - POST
-app.use('/api/product', cartsRouter)
+// => http://localhost:8080/api/carts/:id/products/:id - POST
+
+//Server
+app.use('/api/carts', cartsRouter)
 const server = app.listen(PORT, () =>
   console.log(`Server running on port ${PORT}`)
 );

@@ -29,7 +29,7 @@ productsRouter.get("/:id", async  (req, res) => {
 // if (this.products.find((prod) => prod.code === code)) return;
 // if(title === '' || description == '' || isNaN(price) || thumbnail == '' || isNaN(code) || isNaN(stock)) return
 
-productsRouter.post("/", uploads.single("archivo"), async (req, res)  => {
+productsRouter.post("/agregar", uploads.single("archivo"), async (req, res)  => {
   let newProduct = {
     id: new Date().getMilliseconds(),
     title: req.body.title,
@@ -80,9 +80,7 @@ productsRouter.delete('/:id', async (req, res) =>{
   let id = req.params.id;
   let read = await fs.promises.readFile('productos.json', 'utf-8')
   let delet = JSON.parse(read).filter((elem) =>  elem.id != id)
-  console.log(delet)
   await fs.promises.writeFile('productos.json', JSON.stringify(delet))
-  
   res.send(`Producto con el id ${id} borrado - En su carrito ahora se encuentran los siguientes productos ${JSON.stringify(delet)}`)
 })
 

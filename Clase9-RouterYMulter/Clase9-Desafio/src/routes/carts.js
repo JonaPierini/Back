@@ -9,8 +9,7 @@ cartsRouter.post('/', async (req, res)=> {
         products: JSON.parse(await fs.promises.readFile('productos.json', 'utf8'))
     }]
     newCart.push(await fs.promises.writeFile('carrito.json', JSON.stringify(newCart)))
-    console.log(newCart)
-    res.send('Ruta carrito ok')
+    res.send('Productos agregados al Carrito')
 })
 
 cartsRouter.get('/:id', async (req, res) => {
@@ -20,13 +19,13 @@ cartsRouter.get('/:id', async (req, res) => {
     if(cartFind){
         res.send(cartFind)
     } else{
-        res.send(`No hay productos con el id N° ${id}`)
+        res.send(`No hay carrito con el id N° ${id}`)
     }
 })
 
-cartsRouter.post('/:id', async (req,res)=> {
-    res.send('Ruta post id ok')
-})
+cartsRouter.post('/taro'), async (req, res) => {
+    res.send('Prueba Carrito y Product id')
+}
 
 
 module.exports = cartsRouter
