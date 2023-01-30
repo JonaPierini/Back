@@ -13,41 +13,21 @@ cartsRouter.post('/:cid/products/:pid', async (req, res)=> {
   console.log('Producto en particular por parametro ' + JSON.stringify(findProduct))
 
   let allCarts = await fs.promises.readFile("carrito.json", "utf-8");
-  console.log('Todos los carritos ' + JSON.stringify(allCarts))
-
-  let findCart = JSON.parse(allCarts).find((cart) => cart.id == cid)
-  console.log('Carrito en particular por parametro ' + JSON.stringify(findCart))
-
   
+  allCarts = JSON.parse(allCarts)
 
-
-
-  let {id, product} = findCart
-  
-
-  const prueba = () => {
-    let map = JSON.parse(allCarts).map((elem) => elem.id)
-    console.log(map)
-    if(map) {
-      let spred = [
-        ...JSON.parse(allCarts),
-         {
-           id: id,
-           product: findProduct
-         },
-      ]
-      console.log(spred)
-    }
+  let findIndexCart = allCarts.findIndex((elem) => elem.id == cid)
+  if(findIndexCart === -1){
+    res.send([])
   }
- 
-  prueba()
-
-  // let ind = JSON.parse(allCarts).indexOf(id)
+  let findIndex = allCarts[findIndexCart].product.findIndex((elem) => elem.id == pid)
   
-  // console.log(ind)
-  // console.log(spred)
-  //await fs.promises.writeFile("carrito.json", JSON.stringify(spred));
-  
+  if(findIndex == -1){
+    allCarts[findIndexCart].product.push(findProduct)
+  } else{
+    allCarts[findIndexCart].product[findIndex] = findProduct 
+  }
+  await fs.promises.writeFile("carrito.json", JSON.stringify(allCarts));
   res.send(JSON.stringify(`Carrito`))
 
 })
