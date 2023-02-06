@@ -24,27 +24,13 @@ const httpServer = app.listen(PORT, ()=>{
 const io = new Server(httpServer)
 
 
-let dataCompleta = [
-    {
-        id: new Date().getMilliseconds(),
-        nombre: 'Producto 1',
-    },
-    {
-        id: new Date().getMilliseconds(),
-        nombre: 'Producto 2',
-    },
-    {
-        id: new Date().getMilliseconds(),
-        nombre: 'Producto 3',
-    },
-]
+let dataCompleta = []
 
 app.get('/realTimeProducts', (req, res)=>{
     res.render('realTimeProducts', {dataCompleta})
 })
 
 io.on('connection', socket => {
-    console.log(`Conexion realizada`)
     io.sockets.emit('messages', JSON.stringify(dataCompleta))
     socket.on('message', data => {
         dataCompleta.push({
@@ -52,5 +38,17 @@ io.on('connection', socket => {
             nombre:data,
         })
         io.sockets.emit('messages', JSON.stringify(dataCompleta))
+    })
+})
+
+
+io.on('connection', socket => {
+    console.log('prueba')
+    io.sockets.emit('eliminacion', JSON.stringify(dataCompleta))
+    socket.on('eliminar', data => {
+        let filter = dataCompleta.filter((elem) => elem.id != Number(data))
+        console.log(filter)
+        dataCompleta = filter
+        io.sockets.emit('eliminar', JSON.stringify(dataCompleta)) 
     })
 })
