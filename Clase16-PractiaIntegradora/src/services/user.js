@@ -7,8 +7,9 @@ const getUsersService = async () => {
         let users = await userDAO.getUsers()
         return users
 }
-const creatUserService = (user) => {
-        return `user ${user} guardado`
+const creatUserService = async (user) => {
+        let response = await userDAO.sevaUser(user)
+        return response
 }
 
 export {getUsersService, creatUserService}

@@ -20,6 +20,15 @@ class ContendorMongoDb {
             console.log(error)
         }
     }
+
+    async sevaUser(user) {
+        try {
+            let result = await this.usercollection.create(user)
+            return result
+        } catch (error) {
+            console.log(error)
+        }
+    }
 }
 
 export default ContendorMongoDb
